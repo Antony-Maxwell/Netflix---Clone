@@ -6,6 +6,7 @@ import '../model/tmdb_api_response.dart';
 
 
 Future<dynamic> apicall(String url) async {
+  try{
   http.Response response;
   response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
@@ -13,6 +14,9 @@ Future<dynamic> apicall(String url) async {
     TMDBApiResponseModel tmdbApiResponse = TMDBApiResponseModel.fromJson(data);
     return tmdbApiResponse;
   }else{
-    throw 'Something happened';
+    throw 'failed to fetch data : ${response.statusCode}';
+  }
+  } catch (error){
+    throw 'Something wrong in the api calling';
   }
 }
